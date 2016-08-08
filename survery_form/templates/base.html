@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Online Survey Form</title>
+    <link rel='stylesheet' href="{% static 'css/bootstrap.css' %}" type='text/css'>
+	<link rel='stylesheet' href="{% static 'css/overrides.css' %}" type='text/css'>
+	<link rel='stylesheet' href="{% static 'css/user_define/main.css' %}" type='text/css'>
+    <script src="{% static 'js/plugins/jquery-ui/js/jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery-ui/js/jquery-ui-1.10.4.custom.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/bootbox.js' %}"></script>
+    <script src="{% static 'js/js.cookie.js' %}"></script>
+	<script src="{% static 'js/user_define/survery_form.js' %}"></script>
+<style>
+</style>
+</head>
+<body style="background-color: #f2f5f7;">
+
+<div style="margin-bottom:50px; width:auto; height: 20px; border: 1px #2788b1 solid; background-color: #2788b1;"></div>
+
+<div class='container'>
+{% block content %}
+
+{% endblock content %}
+</div>
+<div style="margin-top:50px;"></div>
+</body>
+</html>
+
+
+
+

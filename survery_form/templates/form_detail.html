@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="form_body" style="margin:20px;">
+	<table class="table table-striped table-bordered">
+		<thead class="thead-inverse">
+			<tr>
+			  <th colspan="4" style="font-size:24px; color: #ffffff; background-color:#337ab7; text-align: center;">Survey Form</th>
+			</tr>
+		</thead>	
+		<tbody>
+		  <tr>
+			  <th scope="row" width="20%">Store Number: </th>
+			  <td colspan="3">{{ store_row.store_number }}</td>
+			</tr>
+			<tr>
+			  <th scope="row">Address: </th>
+			  <td colspan="3">{{ store_row.address }}</td>
+			</tr>
+			<tr>
+			   <th scope="row">City: </th>
+			  <td colspan="3">{{ store_row.city }}</td>
+			</tr>
+			<tr>
+			  <th scope="row">State/Province: </th>
+			  <td colspan="3">{{ store_row.state }}</td>
+			</tr>
+			<tr>
+			  <th scope="row">Zip/Postal code: </th>
+			  <td colspan="3">{{ store_row.zip_code }}</td>
+			</tr>
+			<tr>
+			   <th scope="row">Telephone: </th>
+			  <td colspan="3">{{ store_row.tel }}</td>
+			</tr>
+			<tr>
+			 <th scope="row">Manager: </th>
+			  <td colspan="3">{{ store_row.mgr }}</td>
+			</tr>
+			<!-- for backroom 1,2,3 -->
+			<tr>
+				<th>Does shop have Backroom</th>
+				<td><b>{% if br_row.is_valid %}Yes{% else %}No{% endif %}</b></td>
+				<td>{{ br_row.backroom_notes }}</td>
+				<td>Photo: {% if br_row.image %}<a href="{{ br_row.image.url}}" target="_blank">{{ br_row.image.url}}</a>{% endif %}</a></td>
+			</tr>
+			<tr>
+				<th>Can Existing modem and firewall be moved to backroom</th>
+				<td><b>{% if br_row.is_need_move %}Yes{% else %}No{% endif %}</b></td>
+				<td colspan="2">{{ br_row.move_motes }}</td>
+			</tr>
+			<tr>
+				<th>Time to relocate equipment and install material</th>
+				<td>Hrs.<br/><b>{{ br_row.relatve_time }}</b></td>
+				<td colspan="2">Estimate hours to perform the work included in the Revisit portion of the SOW</td>
+			</tr>
+			
+			<!-- for MountedCabinet 4 -->
+			<tr>
+				<th>Best mounting location in back</th>
+				<td colspan="2"><b>Describe in detail such as next to breaker panel:</b><br/>{{ mc_row.mounted_cabinet_notes }}</td>
+				<td>Photo: {% if mc_row.image %} <a href="{{ mc_row.image.url }}" target="_blank">{{ mc_row.image.url }}</a>{% endif %}</td>
+			</tr>
+			
+			<!-- for MusicLocation 5 --> 
+			<tr>
+				<th>Where is music receiver describe location</th>
+				<td colspan="2">{{ ml_row.music_loc_des }} </td>
+				<td>Photo: {% if ml_row.image %} <a href="{{ mc_row.image.url }}" target="_blank">{{ ml_row.image.url }}</a>{% endif %}</td>
+			</tr>
+			
+			<!-- for NetMusic 6,7 --> 
+			<tr>
+				<th>Is there space next to the music receiver to place a network music player?</th>
+				<td><b>{% if nm_row.is_net_music_valid %}Yes{% else %}No{% endif %}</b></td>
+				<td>{{ nm_row.net_music_notes}}</td>
+				<td>Photo: {% if nm_row.image %} <a href="{{ nm_row.image.url }}" target="_blank">{{ nm_row.image.url }}</a>{% endif %}</td>
+			</tr>
+			<tr>
+				<th>The new music player will require a data line</th>
+				<td colspan="3">Describe the type:<br/>{{ nm_row.music_dataline_des }}</td>
+			</tr>
+			
+			<!-- for Scale 8 --> 
+			<tr>
+				<th>Is the shop Scale</th>
+				<td colspan="2"><b>Describe the type:</b> <br/>{{ sc_row.scale_line_des }}</td>
+				<td>Photo: {% if sc_row.image %}<a href="{{ sc_row.image.url }}" target="_blank">{{ sc_row.image.url }}</a>{% endif %}</td>
+			</tr>
+			
+			<!-- for WiFiAndNetPrinter 9.10 --> 
+			<tr>
+				<th>Is there a strong WiFi signal?</th>
+				<td><b>{% if wfnp_row.is_valid %}Yes{% else %}No{% endif %}</b></td>
+				<td colspan="2"><b>If No indicate low signal level locations by merchandise such as the body lotion area:</b> <br/>{{ wfnp_row.no_indicate_singal_des }}</td>
+			</tr>
+			<tr>
+				<th>Work with shop manager to find suitable space for network printer</th>
+				<td colspan="2"><b>Describe the location</b> <br/>{{ wfnp_row.net_printer_des }}</td>
+				<td>Photo: {% if wfnp_row.image %}<a href="{{ wfnp_row.image.url }}" target="_blank">{{ wfnp_row.image.url }}</a>{% endif %}</td>
+			</tr>
+			
+			<!-- comments and 5 images -->
+			<tr>
+				<th>Additional Comments: </th>
+				<td colspan="3">{{ addi_row.comments }}</td>
+			</tr>
+			<tr>
+				<th>Additional Photos: </th>
+				<td colspan="3">{% if addi_row.image_1 %}<a href="{{ addi_row.image_1.url }}" target="_blank">{{ addi_row.image_1.url }}</a>{% endif %}</td>
+			</tr>
+			{% if addi_row.image_2 %}
+			<tr>
+				<th></th>
+				<td colspan="3">{% if addi_row.image_2 %}<a href="{{ addi_row.image_2.url }}" target="_blank">{{ addi_row.image_2.url }}</a>{% endif %}</td>
+			</tr>
+			{% endif %}
+			{% if addi_row.image_3 %}
+			<tr>
+				<th></th>
+				<td colspan="3">{% if addi_row.image_3 %}<a href="{{ addi_row.image_3.url }}" target="_blank">{{ addi_row.image_3.url }}</a>{% endif %}</td>
+			</tr>
+			{% endif %}
+			{% if addi_row.image_4 %}
+			<tr>
+				<th></th>
+				<td colspan="3">{% if addi_row.image_4 %}<a href="{{ addi_row.image_4.url }}" target="_blank">{{ addi_row.image_4.url }}</a>{% endif %}</td>
+			</tr>
+			{% endif %}
+			{% if addi_row.image_5 %}
+			<tr>
+				<th></th>
+				<td colspan="3">{% if addi_row.image_5 %}<a href="{{ addi_row.image_5.url }}" target="_blank">{{ addi_row.image_5.url }}</a>{% endif %}</td>
+			</tr>
+			{% endif %}
+			
+			<tr>
+				<td colspan="4">
+				<input type='button' class='btn btn-primary btn_usr' value='Back' onclick="location.href='javascript:history.back()'"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+{% endblock content %}

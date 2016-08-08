@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div>
+<h1>Survey Form</h1>
+<h2>Step 1/8</h2>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form id="store_form" method="POST" action="{% url 'store_post_create' %}" enctype='multipart/form-data' onSubmit="javascript:return storeFormValid();">{% csrf_token %}
+	{{ form.non_field_errors }}
+	<div>
+		{{ form.subject.errors }}
+		{{ form.as_p }} 
+		<br/>
+		
+		<label id='store_err_msg_lbl_id' class="err_msg_lbl" style=""></label>
+		<br/>
+		<input type='submit' class='btn btn-primary btn_usr' value='Next'  id='store_sbm_btn'/>
+		<input type='button' class='btn btn-default btn_usr' value='Cancel' id='store_cnl_btn'/>
+	</div>
+</form>
+<br/>
+<label>* All fields must be filled. *</label>
+</div>
+
+<script type="text/javascript">
+
+function fieldValid(fieldId, errMsg, err = false){
+	if(!$('#' + fieldId).val() || err ){
+	    $('#' + fieldId).css({'border': '1px solid red'});
+		$('#' + fieldId).focus();
+		$('#store_err_msg_lbl_id').html(errMsg);
+		return false;
+	}else{
+		$('#' + fieldId).css({'border': ''});
+		$('#store_err_msg_lbl_id').html('');
+		return true;
+	}
+}
+
+function storeFormValid(){
+	if(fieldValid('id_store_number', 'Store Number is required.') && 
+	             fieldValid('id_address', 'Address is required.') &&
+				 fieldValid('id_city', 'City is required.') &&
+				 fieldValid('id_state', 'State/Province is required.') &&
+				 fieldValid('id_zip_code', 'Zip/Postal Code is required.') &&
+				 fieldValid('id_tel', 'Telephone is required.') &&
+				 fieldValid('id_mgr', 'Manager is required.'))
+	{
+		var zip_code = $('#id_zip_code').val();
+		var is_valid_zip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zip_code);
+		
+		if(!is_valid_zip){
+			fieldValid('id_zip_code', 'Zip/Postal Code incorrect. eg. 75033', true);
+		}
+		var tel = $('#id_tel').val();
+		var is_valid_tel = /(^\d{10}$)/.test(tel);
+		if(!is_valid_tel){
+			fieldValid('id_tel', 'Telephone incorrect. eg. 1234567890', true);
+		}
+		return true;
+	}
+    return false;
+}
+</script>
+
+{% endblock content %}

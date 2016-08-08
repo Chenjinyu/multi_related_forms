@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div>
+<h1>Survey Form</h1>
+<h2>Step 5/8</h2>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form method="POST" action="{% url 'nm_post_create' %}" enctype='multipart/form-data' onSubmit="javascript:return nmFormValid();">{% csrf_token %}
+{{ form.as_p }}
+<br/>
+<label id='nm_err_msg_lbl_id' class="err_msg_lbl" style=""></label><br/>
+<input type='button' class='btn btn-info btn_usr' value='Last' onclick="location.href='{% url 'ml_post_create' %}'"/>
+<input type='submit' class='btn btn-primary btn_usr' value='Next' />
+<input type='button' class='btn btn-default' value='Cancel' id='nm_cnl_btn'/>
+</form>
+</div>
+
+<script type="text/javascript">
+
+function nmFormValid(){
+
+	if($('#id_is_net_music_valid').is(":checked"))
+	{
+		if(!$('#id_image').val()){
+			$('#id_image').css({'border': '1px solid red'});
+			$('#nm_err_msg_lbl_id').html("When you selected the checkbox, must upload a photo.");
+			return false;
+		}
+		else{
+			$('#id_image').css({'border': ''});
+			$('#nm_err_msg_lbl_id').html('');
+		}
+	}
+	
+	return true;
+}
+</script>
+
+{% endblock content %}

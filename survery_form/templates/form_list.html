@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Survey Form List</h1>
+
+<div class="list-group">
+{% for d in forms %}
+{% if is_customer %} 
+<a href="{% url 'customer_detail' pk=d.pk%}" class="list-group-item list_usr">
+{% else %}
+<a href="{% url 'online_detail' pk=d.pk%}" class="list-group-item list_usr">
+{% endif %}
+ <h4 class="list-group-item-heading"><b>Store Number: {{ d.store_number }} | Manager: {{ d.mgr }} | Date: {{ d.publish_datetime }}</b></h4>
+ <p class="list-group-item-text">
+ Address: {{ d.address}} | City: {{ d.city }} | State: {{ d.state }} | Telephone: {{ d.tel }}
+ </p>
+ </a>
+{% endfor %}
+</div>
+
+<nav>
+     <ul class="pager">
+        {% if forms.has_previous %}
+            <li><a href="?page={{ forms.previous_page_number }}">Previous</a></li>
+        {% endif %}
+
+        <span class="current">
+            <li><a>Page {{ forms.number }} of {{ forms.paginator.num_pages }}</a></li>
+        </span>
+
+        {% if forms.has_next %}
+            <li><a href="?page={{ forms.next_page_number }}">Next</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div style=""><a href="{% url 'online_wel' %}" style="float:right;">Home Page</a></div>
+{% endblock content %}

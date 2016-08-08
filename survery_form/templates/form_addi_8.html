@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div>
+<h1>Survey Form</h1>
+<h2>Step 8/8</h2>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form id="post_form" method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+{{ form.as_p }}
+<br/>
+<input type='button' class='btn btn-info btn_usr' value='Last' onclick="location.href='{% url 'wfnp_post_create' %}'"/>
+<input type='submit' class='btn btn-primary btn_usr' value='Submit' />
+<input type='button' class='btn btn-default' value='Cancel' id='addi_cnl_btn'/>
+</form>
+</div>
+{% endblock content %}

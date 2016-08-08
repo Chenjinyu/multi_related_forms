@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+<ul>
+{% for d in forms %}
+    <li><a href="{% url 'online_detail' pk=d.pk%}">{{ d.store_number }}</a></li>
+{% endfor %}
+</ul>
+</div>
+
+<ul class="pagination">
+{% if not forms.has_previous %}
+  <li><a href="?page={{ forms.previous_page_number }}" class="disabled">&laquo;</a></li>
+{% elif %}
+  <li><a href="?page={{ forms.previous_page_number }}">&laquo;</a></li>
+{% endif %}
+
+{% for p in forms.paginator.num_pages%}
+{% if forms.paginator.num_pages  < 10 %}
+  <li class="active"><a href="#">1</a></li>
+  <li class="disabled"><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+  <li><a href="?page={{ forms.next_page_number }}">&raquo;</a></li>
+</ul>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if forms.has_previous %}
+            <a href="?page={{ forms.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ forms.number }} of {{ forms.paginator.num_pages }}.
+        </span>
+
+        {% if forms.has_next %}
+            <a href="?page={{ forms.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock content %}

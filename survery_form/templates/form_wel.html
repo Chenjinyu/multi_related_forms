@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style='height:500px;'>
+<br/>
+{% if succ_message %} <div class="alert alert-success">{{ succ_message }}</div>{% endif %}
+{% if error_message %}<div class="alert alert-danger">{{ error_message }}</div>{% endif %}
+{% if info_message %}<div class="alert alert-info">{{ info_message }}</div>{% endif %}
+<label><b>this is a welcome page.</b> please click <b><a href="{% url 'store_post_create' %}">online form</a></b> to submit your infomatin.<br/></label>
+
+
+<form method="POST" action="{% url 'customer_check' %}" enctype='multipart/form-data' onSubmit="javascript:return traceValid();">{% csrf_token %}
+<label for="username">please input your telephone number:</label>
+<input class="form-control input-lg usr_max_width" type="text" name="id_tel" value="" id="id_tel">
+<label id='trace_err_msg_lbl_id' class="err_msg_lbl" style=""></label><br/>
+<input type='submit' class='btn btn-primary btn_usr' value='Check' />
+</form>
+<div class="usr_max_width"><a href="{% url 'user_login' %}" style="float:right;">Admin Login</a></div>
+</div>
+
+<script type="text/javascript">
+function traceValid(){
+	if(!$('#id_tel').val()){
+		$('#id_tel').css({'border': '1px solid red'});
+		$('#trace_err_msg_lbl_id').html("Telephone is required.");
+		return false;
+	}
+	else
+	{
+		var tel = $('#id_tel').val();
+		var is_valid_tel = /(^\d{10}$)/.test(tel);
+		if(!is_valid_tel){
+			$('#id_tel').css({'border': '1px solid red'});
+			$('#trace_err_msg_lbl_id').html("Telephone incorrect. eg. 1234567890.");
+			return false;
+		}
+	}
+	
+	$('#id_image').css({'border': ''});
+	$('#nm_err_msg_lbl_id').html('');
+	
+	return true;
+}
+</script>
+
+{% endblock content %}

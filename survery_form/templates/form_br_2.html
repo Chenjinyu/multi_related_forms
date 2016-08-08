@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div>
+<h1>Survey Form</h1>
+<h2>Step 2/8</h2>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form method="POST" action="{% url 'br_post_create' %}" enctype='multipart/form-data' id="br_form" onSubmit="javascript:return brFormValid();">{% csrf_token %}
+	{{ form.non_field_errors }}
+<div>
+		{{ form.subject.errors }}
+      {{ form.as_p }}
+	<label></label><br/>
+	<label id='br_err_msg_lbl_id' class="err_msg_lbl" style=""></label><br/>
+	<input type='button' class='btn btn-info btn_usr' value='Last' onclick="location.href='{% url 'store_post_create' %}'"/>
+	<input type='submit' class='btn btn-primary btn_usr' value='Next' id="br_next_btn"/>
+	<input type='button' class='btn btn-default btn_usr' value='Cancel' id='br_cnl_btn'/>
+</div>
+</form>
+</div>
+
+<script type="text/javascript">
+
+function brFormValid(){
+	if(!$('#id_relatve_time').val()){
+		$('#id_relatve_time').css({'border': '1px solid red'});
+		$('#br_err_msg_lbl_id').html("This field is required.");
+		return false;
+	}
+	if($('#id_is_valid').is(":checked"))
+	{
+		if(!$('#id_image').val()){
+			$('#id_image').css({'border': '1px solid red'});
+			$('#br_err_msg_lbl_id').html("When you selected the checkbox, must upload a photo.");
+			return false;
+		}
+		else{
+			$('#id_image').css({'border': ''});
+			$('#br_err_msg_lbl_id').html('');
+		}
+	}
+	
+	return true;
+}
+</script>
+
+{% endblock content %}
